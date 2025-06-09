@@ -23,5 +23,8 @@ export class Guest {
   @Column({ default: false })
   is_main_guest: boolean
 
+  @Column({ nullable: true })
+  tag?: string;
+
 }
 
