@@ -22,4 +22,21 @@ export class AuthService {
       code: invitation.code
     };
   }
+
+  async loginWithTonke(token: string) {
+
+    const invitation = await this.invitationService.getInvitationByToken(token);
+
+    if (!invitation) {
+      throw new UnauthorizedException('Código inválido');
+    }
+
+    const payload = { sub: invitation._id.toString(), code: invitation.code };
+
+    return {
+      token: this.jwtService.sign(payload),
+      code: invitation.code
+    };
+  }
+
 }
