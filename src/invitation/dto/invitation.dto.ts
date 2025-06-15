@@ -1,4 +1,4 @@
-import { IsArray, IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsBoolean, IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 import { InvitationStatus } from 'src/common/enums/invitation.enum';
 import { Guest } from 'src/guest/guest.entity';
 
@@ -17,6 +17,10 @@ export class InvitationDto {
 
   @IsEnum(InvitationStatus)
   status: InvitationStatus;
+
+  @IsOptional()
+  @IsBoolean()
+  isExclusive: boolean;
 
   @IsNumber()
   max_guests: number;
