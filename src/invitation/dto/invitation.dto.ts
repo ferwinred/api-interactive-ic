@@ -20,7 +20,7 @@ export class InvitationDto {
 
   @IsOptional()
   @IsBoolean()
-  isExclusive: boolean;
+  isExclusive?: boolean;
 
   @IsNumber()
   max_guests: number;

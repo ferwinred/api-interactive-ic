@@ -9,6 +9,7 @@ import { GuestDto } from './dto/guest.dto';
 import { InvitationService } from 'src/invitation/invitation.service';
 import { GuestUpdateDto } from './dto/guest-update.dto';
 import { Status } from 'src/common/enums/guest.enum';
+import { ResponseGuest } from 'src/common/interface/response.interface';
 
 @Injectable()
 export class GuestService {
@@ -80,7 +81,7 @@ export class GuestService {
     };
   }
 
-  async confirmGuest(status: string, id: ObjectId): Promise<Guest> {
+  async confirmGuest(status: string, id: ObjectId): Promise<ResponseGuest> {
     const validStatuses = ['pending', 'confirmed', 'declined'];
     if (!validStatuses.includes(status)) {
       throw new BadRequestException('Invalid status');
@@ -95,6 +96,9 @@ export class GuestService {
 
     await this.guestRepo.save(guest);
 
-    return guest;
+    return {
+      message: 'Guest successfully confirmed',
+      guest: guest
+    };
   }
 }
