@@ -1,5 +1,5 @@
 // guest.service.ts
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MongoRepository } from 'typeorm';
 import { Guest } from './guest.entity';
@@ -7,6 +7,8 @@ import { Invitation } from 'src/invitation/invitation.entity';
 import { ObjectId } from 'mongodb';
 import { GuestDto } from './dto/guest.dto';
 import { InvitationService } from 'src/invitation/invitation.service';
+import { GuestUpdateDto } from './dto/guest-update.dto';
+import { Status } from 'src/common/enums/guest.enum';
 
 @Injectable()
 export class GuestService {
@@ -31,6 +33,11 @@ export class GuestService {
   }
 
   async createGuest(guest: GuestDto){
+
+    if(guest.name === '' || guest.last_name === ''){
+      throw new BadRequestException('Nombre y Apellido son requeridos');
+    }
+
     const newGuest = this.guestRepo.create(guest);
 
     await this.guestRepo.save(newGuest);
@@ -39,5 +46,55 @@ export class GuestService {
         message: 'Guest succesfully created',
         guest: newGuest
     }
+  }
+
+  async updateGuest(id: ObjectId, guestDto: GuestUpdateDto) {
+    const guest = await this.guestRepo.findOne({ where: { _id: id } });
+
+    if (!guest) {
+      throw new NotFoundException('Guest not found');
+    }
+
+    // Update the guest properties
+    Object.assign(guest, guestDto);
+
+    console.log(guest);
+    // Save the updated guest
+    await this.guestRepo.save(guest);
+
+    return guest;
+  }
+
+  async deleteGuest(id: ObjectId) {
+    const guest = await this.guestRepo.findOne({ where: { _id: id } });
+
+    if (!guest) {
+      throw new NotFoundException('Guest not found');
+    }
+
+    await this.guestRepo.delete(id);
+
+    return {
+      message: 'Guest successfully deleted',
+      guest: guest
+    };
+  }
+
+  async confirmGuest(status: string, id: ObjectId): Promise<Guest> {
+    const validStatuses = ['pending', 'confirmed', 'declined'];
+    if (!validStatuses.includes(status)) {
+      throw new BadRequestException('Invalid status');
+    }
+
+    const guest = await this.guestRepo.findOne({ where: { _id: id } });
+    if (!guest) {
+      throw new NotFoundException('Guest not found');
+    }
+
+    guest.status = status == 'confirmed' ? Status.CONFIMED: Status.PENDING;
+
+    await this.guestRepo.save(guest);
+
+    return guest;
   }
 }

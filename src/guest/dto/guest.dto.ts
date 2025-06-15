@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsBoolean, IsEnum, IsString } from 'class-validator';
+import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
 import { Status } from 'src/common/enums/guest.enum';
 import { ObjectId } from 'mongodb';
 
@@ -19,5 +19,8 @@ export class GuestDto {
 
   @IsBoolean()
   is_main_guest?: boolean;
+
+  @IsOptional()
+  tag?: string;
 
 }

@@ -6,7 +6,6 @@ import { Guest } from './guest/guest.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Invitation } from './invitation/invitation.entity';
 import { InvitationModule } from './invitation/invitation.module';
-import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
 
 @Module({

@@ -58,4 +58,14 @@ export class InvitationService {
     };
   }
 
+  async getInvitationByToken(token: string): Promise<Invitation> {
+    const invitation = await this.invitationRepo.findOne({ where: { token } });
+
+    if(!invitation) {
+      throw new NotFoundException('Token inválido');
+    }
+
+    return invitation;
+  }
+
 }

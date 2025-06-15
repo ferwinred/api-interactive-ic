@@ -13,6 +13,11 @@ export class InvitationController {
     return this.invitationService.getInvitation(code);
   }
 
+  @Get('getInvitation/token/:token')
+  async getInvitationByToken(@Param('token') token: string): Promise<Invitation> {
+    return this.invitationService.getInvitationByToken(token);
+  }
+
   @Post('')
   async createInvitation(@Body() invitationDto: InvitationDto){
     return this.invitationService.createInvitation(invitationDto);
