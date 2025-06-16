@@ -19,7 +19,8 @@ export class AuthService {
 
     return {
       token: this.jwtService.sign(payload),
-      code: invitation.code
+      code: invitation.code,
+      exclusive: invitation.is_exclusive
     };
   }
 
@@ -35,7 +36,8 @@ export class AuthService {
 
     return {
       token: this.jwtService.sign(payload),
-      code: invitation.code
+      code: invitation.code,
+      exclusive: invitation.is_exclusive
     };
   }
 

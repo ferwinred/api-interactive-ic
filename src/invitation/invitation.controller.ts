@@ -22,4 +22,10 @@ export class InvitationController {
   async createInvitation(@Body() invitationDto: InvitationDto){
     return this.invitationService.createInvitation(invitationDto);
   }
+
+  @Get('')
+  async getAllInvitations(): Promise<Invitation[]> {
+    return this.invitationService.getAllInvitations();
+  }
+
 }

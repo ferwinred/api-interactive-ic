@@ -97,4 +97,36 @@ export class GuestService {
 
     return guest;
   }
+
+  async getAllGuests(): Promise<Guest[]> {
+    const guests = await this.guestRepo.aggregate([
+      {
+        $lookup: {
+          from: 'invitation', // nombre de la colección
+          localField: 'invitation',
+          foreignField: '_id',
+          as: 'invitationData'
+        }
+      },
+      {
+        $unwind: {
+          path: '$invitationData',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $project: {
+          name: 1,
+          status: 1,
+          last_name: 1,
+          is_main_guest: 1,
+          code: '$invitationData.code',
+          invitation: 1 // si quieres mantener el ObjectId también
+        }
+      }
+    ]).toArray();
+
+    return guests;
+
+  }
 }

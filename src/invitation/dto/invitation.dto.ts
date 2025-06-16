@@ -21,4 +21,7 @@ export class InvitationDto {
   @IsNumber()
   max_guests: number;
 
+  @IsOptional()
+  is_exclusive: boolean;
+
 }

@@ -68,4 +68,12 @@ export class InvitationService {
     return invitation;
   }
 
+  async getAllInvitations(): Promise<Invitation[]> {
+    const invitations = await this.invitationRepo.find();
+    if (!invitations) {
+      throw new NotFoundException('No invitations found');
+    }
+    return invitations;
+  }
+
 }

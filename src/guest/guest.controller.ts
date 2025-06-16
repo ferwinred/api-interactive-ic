@@ -18,6 +18,11 @@ export class GuestController {
     return this.guestService.getGuestsByCode(invitation);
  }
 
+ @Get('')
+ async getAllGuests(): Promise<Guest[]> {
+    return this.guestService.getAllGuests();
+ }
+
   @Post('')
   async createGuest(@Body() guestDto: GuestDto): Promise<ResponseGuest> {
     return this.guestService.createGuest(guestDto);
@@ -42,4 +47,7 @@ export class GuestController {
     const guest = await this.guestService.deleteGuest(new ObjectId(id));
     return { message: guest.message };
   }
+
+
+
 }

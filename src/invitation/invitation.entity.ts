@@ -26,4 +26,7 @@ export class Invitation {
   @OneToMany(() => Guest, (guest) => guest.invitation)
   guests: Guest[];
 
+  @Column({ default: false })
+  is_exclusive: boolean;
+
 }
