@@ -28,6 +28,12 @@ export class GuestController {
     return this.guestService.createGuest(guestDto);
   }
 
+  @Patch('/confirmation/:id')
+  async confirmGuest(@Body() body: { status: string }, @Param('id') id: string): Promise<ResponseGuest> {
+    const { status } = body;
+    return this.guestService.confirmGuest(status, new ObjectId(id));
+  }
+
   @Patch('/:id')
   async updateGuest(@Body() guestDto: GuestUpdateDto, @Param('id') id: string): Promise<ResponseGuest> {
     console.log(guestDto, id);
@@ -36,11 +42,6 @@ export class GuestController {
 
   }
 
-  @Patch('/confirmation/:id')
-  async confirmGuest(@Body() body: { status: string }, @Param() id: string): Promise<Guest> {
-    const { status } = body;
-    return this.guestService.confirmGuest(status, new ObjectId(id));
-  }
 
   @Delete('/:id')
   async deleteGuest(@Param('id') id: string): Promise<{ message: string }> {

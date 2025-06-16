@@ -19,6 +19,9 @@ export class Invitation {
   @Column({ default: 'send' })
   status: InvitationStatus;
 
+  @Column({ default: false})
+  isEclusive: boolean;
+
   @Column()
   max_guests: number;
 
