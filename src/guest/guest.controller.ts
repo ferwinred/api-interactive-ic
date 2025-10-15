@@ -5,7 +5,6 @@ import { Guest } from './guest.entity';
 import { ObjectId } from 'mongodb';
 import { GuestDto } from './dto/guest.dto';
 import { ResponseGuest } from 'src/common/interface/response.interface';
-import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { GuestUpdateDto } from './dto/guest-update.dto';
 
 
