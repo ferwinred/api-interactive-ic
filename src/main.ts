@@ -11,7 +11,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(
     new ValidationPipe({
-      transform: true, // 🔁 esto permite aplicar @Transform()
+      transform: true,
     }),
   );
 
